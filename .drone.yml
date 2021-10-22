@@ -4,9 +4,15 @@ type: docker
 name: default
 
 steps:
-- name: test
-  image: mcr.microsoft.com/dotnet/sdk:5.0
-  environment:
-    RUNTIME_IDENTIFIER: linux-x64
-  commands:
-  - dotnet test
+  - name: test
+    image: mcr.microsoft.com/dotnet/sdk:5.0
+    environment:
+      RUNTIME_IDENTIFIER: linux-x64
+    commands:
+      - dotnet test
+  - name: build
+    image: mcr.microsoft.com/dotnet/sdk:5.0
+    environment:
+      RUNTIME_IDENTIFIER: linux-x64
+    commands:
+      - dotnet build -c Release
