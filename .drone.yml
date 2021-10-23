@@ -38,7 +38,7 @@ steps:
     image: alpine:latest
     commands:
       - ls -ahl src/bin/Release/net5.0/linux-x64/publish
-      - printenv
+      - printenv | sort
 
 trigger:
   event:
@@ -60,7 +60,7 @@ steps:
     image: alpine:latest
     commands:
       - ls -ahl src/bin/Release/net5.0/linux-x64/publish
-      - printenv
+      - printenv | sort
 
 trigger:
   event:
