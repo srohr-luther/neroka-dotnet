@@ -9,10 +9,59 @@ steps:
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
-      - dotnet test
+      - dotnet test -c Release
+
   - name: build
     image: mcr.microsoft.com/dotnet/sdk:5.0
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
       - dotnet build -c Release
+
+trigger:
+  event:
+    - push
+
+---
+kind: pipeline
+type: docker
+name: promote
+
+steps:
+  - name: publish
+    image: mcr.microsoft.com/dotnet/sdk:5.0
+    environment:
+      RUNTIME_IDENTIFIER: linux-x64
+    commands:
+      - dotnet publish -c Release
+  - name: push
+    image: alpine:latest
+    commands:
+      - ls -ahl src/bin/Release/net5.0/linux-x64/publish
+      - printenv
+
+trigger:
+  event:
+    - promote
+
+---
+kind: pipeline
+type: docker
+name: rollback
+
+steps:
+  - name: publish
+    image: mcr.microsoft.com/dotnet/sdk:5.0
+    environment:
+      RUNTIME_IDENTIFIER: linux-x64
+    commands:
+      - dotnet publish -c Release
+  - name: push
+    image: alpine:latest
+    commands:
+      - ls -ahl src/bin/Release/net5.0/linux-x64/publish
+      - printenv
+
+trigger:
+  event:
+    - rollback
