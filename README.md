@@ -13,6 +13,7 @@
   - `dotnet tool restore`
 - `dotnet dotnet-outdated`
   - `dotnet dotnet-outdated -u`
+- `dotnet tool install GitVersion.Tool`
 
 ## Dependencies
 

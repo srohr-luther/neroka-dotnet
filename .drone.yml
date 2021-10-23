@@ -9,6 +9,7 @@ steps:
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
+      - dotnet tool restore
       - dotnet test -c Release
 
   - name: build
@@ -16,6 +17,7 @@ steps:
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
+      - dotnet tool restore
       - dotnet build -c Release
 
 trigger:
@@ -33,6 +35,7 @@ steps:
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
+      - dotnet tool restore
       - dotnet publish -c Release
   - name: push
     image: alpine:latest
@@ -55,6 +58,7 @@ steps:
     environment:
       RUNTIME_IDENTIFIER: linux-x64
     commands:
+      - dotnet tool restore
       - dotnet publish -c Release
   - name: push
     image: alpine:latest
