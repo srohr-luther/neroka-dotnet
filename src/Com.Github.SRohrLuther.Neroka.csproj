@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- default values -->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TARGET_FRAMEWORK Condition="'$(TARGET_FRAMEWORK)' == '' ">net5.0</TARGET_FRAMEWORK>
+    <RUNTIME_IDENTIFIER Condition="'$(RUNTIME_IDENTIFIER)' == '' ">linux-x64</RUNTIME_IDENTIFIER>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>$(TARGET_FRAMEWORK)</TargetFramework>
 
     <OutputType>Exe</OutputType>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>

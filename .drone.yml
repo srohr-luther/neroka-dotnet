@@ -6,16 +6,12 @@ name: default
 steps:
   - name: test
     image: mcr.microsoft.com/dotnet/sdk:5.0
-    environment:
-      RUNTIME_IDENTIFIER: linux-x64
     commands:
       - dotnet tool restore
       - dotnet test -c Release
 
   - name: build
     image: mcr.microsoft.com/dotnet/sdk:5.0
-    environment:
-      RUNTIME_IDENTIFIER: linux-x64
     commands:
       - dotnet tool restore
       - dotnet build -c Release
@@ -27,13 +23,36 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: promote
+name: tag
 
 steps:
   - name: publish
     image: mcr.microsoft.com/dotnet/sdk:5.0
     environment:
       RUNTIME_IDENTIFIER: linux-x64
+    commands:
+      - dotnet tool restore
+      - dotnet publish -c Release
+  - name: push
+    image: alpine:latest
+    commands:
+      - ls -ahl src/bin/Release/net5.0/linux-x64/publish
+      - printenv | sort
+
+trigger:
+  branch:
+    - master
+  event:
+    - tag
+
+---
+kind: pipeline
+type: docker
+name: promote
+
+steps:
+  - name: publish
+    image: mcr.microsoft.com/dotnet/sdk:5.0
     commands:
       - dotnet tool restore
       - dotnet publish -c Release
@@ -55,8 +74,6 @@ name: rollback
 steps:
   - name: publish
     image: mcr.microsoft.com/dotnet/sdk:5.0
-    environment:
-      RUNTIME_IDENTIFIER: linux-x64
     commands:
       - dotnet tool restore
       - dotnet publish -c Release
