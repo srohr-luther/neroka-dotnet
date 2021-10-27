@@ -1,3 +1,4 @@
+.secret-file
 bin
-obj
 GitVersion.json
+obj
