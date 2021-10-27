@@ -9,6 +9,9 @@
   <PropertyGroup>
     <TargetFramework>$(TARGET_FRAMEWORK)</TargetFramework>
 
+    <RepositoryUrl>https://github.com/srohr-luther/neroka-dotnet.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
     <OutputType>Exe</OutputType>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <PublishReadyToRun>true</PublishReadyToRun>
